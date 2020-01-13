@@ -10,32 +10,33 @@ public class WorstFit
      */
     static ArrayList<Integer> worstFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        //partition which is largest sufficient among the freely available partitions available
-        //If a large process comes at a later stage, then memory will not have space to accommodate it.
-        int m=sizeOfBlocks.length;
-        int n=sizeOfProcesses.length;
-        ArrayList<Integer> array = new ArrayList<Integer>(n);
+
+        int m=sizeOfBlocks.length; //number o blocks
+        int n=sizeOfProcesses.length; //number of processes
+        ArrayList<Integer> array = new ArrayList<Integer>(n); // Stores block id -> block allocated to a process
+        //for each process
         for(int i=0;i<n;i++){
-            int worst=-255;
+            //We want to find the biggest size  among the free available partitions
+            int worst=-255; //initialize the maximum block size(worst) with -255
             for(int j=0;j<m;j++){
-                if(sizeOfBlocks[j]>=sizeOfProcesses[i]) {
-                    if (worst == -255) {
+                if(sizeOfBlocks[j]>=sizeOfProcesses[i]) { //find suitable blocks
+                    if (worst == -255) { //if we haven't found a price for worst
                         worst = j;
                     }
                     else{
-                        if(sizeOfBlocks[worst]<sizeOfBlocks[j]){
-                            worst=j;
-                        }
+                       if(sizeOfBlocks[worst]<sizeOfBlocks[j]){ //if we have-> check if the new price is bigger
+                           worst=j; //replace it
+                       }
                     }
                 }
             }
-            if (worst != -255)
+            if (worst != -255)// If we could find a block for current process
             {
-                array.add(worst);
-                sizeOfBlocks[worst] -= sizeOfProcesses[i];
+                array.add(worst);  // allocate block worst to process
+                sizeOfBlocks[worst] -= sizeOfProcesses[i];  // reduce available memory in this block
             }
             else {
-                array.add(-255);
+                array.add(-255); //add price -255->has not been actually allocated
             }
         }
         return array;
@@ -93,3 +94,4 @@ public class WorstFit
         printMemoryAllocation(memAlloc);
     }
 }
+
