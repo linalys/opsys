@@ -10,25 +10,25 @@ public class NextFit
      */
     static ArrayList<Integer> nextFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        int m=sizeOfBlocks.length;
-        int n=sizeOfProcesses.length;
-        ArrayList<Integer> array = new ArrayList<Integer>(n);
+        int m=sizeOfBlocks.length;//number o blocks
+        int n=sizeOfProcesses.length;//number of processes
+        ArrayList<Integer> array = new ArrayList<Integer>(n);// Stores block id ->block allocated to a process
         int j=0;
-
+        //for each process: check if it can be assigned to the current block
         for(int i=0;i<n;i++){
             int k=0;
-            int flag=0;
+            int flag=0; //flag=1-> process can be assigned to a block or flag=1->process can't be assigned to a block
             while(k<m){
                 k++;
-                if(sizeOfBlocks[j]>=sizeOfProcesses[i]){
+                if(sizeOfBlocks[j]>=sizeOfProcesses[i]){ //if yes
                     flag=1;
-                    array.add(j);
-                    sizeOfBlocks[j] -= sizeOfProcesses[i];
+                    array.add(j);// allocate block j to process
+                    sizeOfBlocks[j] -= sizeOfProcesses[i];// reduce available memory in this block
                     break;
                 }
-                j=(j+1)%m; //from where we stop
+                j=(j+1)%m; //from where we stop->next time: it starts searching from where it left off
             }
-            if(flag==0){array.add(-255);}
+            if(flag==0){array.add(-255);} //add price -255->has not been actually allocated
         }
         return array;
 
@@ -84,3 +84,4 @@ public class NextFit
         printMemoryAllocation(memAlloc);
     }
 }
+
