@@ -10,17 +10,19 @@ public class FirstFit
      */
     static ArrayList<Integer> firstFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        int m=sizeOfBlocks.length;
-        int n=sizeOfProcesses.length;
-        ArrayList<Integer> array = new ArrayList<Integer>(n);
+
+        int m=sizeOfBlocks.length;//number of blocks
+        int n=sizeOfProcesses.length;//number of processes
+        ArrayList<Integer> array = new ArrayList<Integer>(n);//Stores block id->block allocated to a process
         for(int i=0;i<n;i++){
-            int flag=0;
+            //for each process: check for a block that can be allocated to
+            int flag=0;//flag=1-> process can be assigned to a block or flag=1->process can't be assigned to a block
             for(int j=0;j<m;j++){
-                if(sizeOfBlocks[j]>=sizeOfProcesses[i]){
+                if(sizeOfBlocks[j]>=sizeOfProcesses[i]){ //if yes
                     flag=1;
-                    array.add(j);
-                    sizeOfBlocks[j] -= sizeOfProcesses[i];
-                    break;
+                    array.add(j);// allocate block j to process
+                    sizeOfBlocks[j] -= sizeOfProcesses[i]; //reduce available memory in this block
+                    break;//In the first fit, we want the first appropriate size from the top of Main Memory.
                 }
 
             }
